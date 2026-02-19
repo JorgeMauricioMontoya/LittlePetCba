@@ -160,7 +160,7 @@ window.addEventListener('load', function(){
 
             emailjs.send("service_vndscod", "template_tco7pdf", templateParams) // 🔹 SERVICE ID, TEMPLATE ID
             .then(function(response) {
-                window.location.href = "index.html";
+                window.location.href = "mascota/perfilBrownie.html";
                 console.log("SUCCESS!", response.status, response.text);
             }, function(error) {
                 alert("Error al enviar ❌");
@@ -196,7 +196,7 @@ window.addEventListener('load', function(){
 
         <button id="sendMail">Sí, adelante.</button>
 
-        <a href="index.html"> 
+        <a href="mascota/perfilBrownie.html"> 
             <button style="background:#d7dde4;color:rgb(107,103,103);">
                 No, gracias.
             </button>
