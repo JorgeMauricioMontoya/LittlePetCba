@@ -9,12 +9,77 @@
         
         <!--=============== REMIX ICONS ===============-->
         <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+        
 
         <!--=============== CSS ===============-->
         <link rel="stylesheet" href="../assets/css/styles.css">
 
         <title>Brownie 🐈‍⬛</title>
     </head>
+     <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const elemento = document.getElementById("edadMascota");
+
+    if (!elemento) {
+        console.error("No se encontró el elemento edadMascota");
+        return;
+    }
+
+    const fechaStr = elemento.dataset.nacimiento;
+
+    if (!fechaStr) {
+        console.error("No se encontró data-nacimiento");
+        elemento.textContent = "Fecha inválida";
+        return;
+    }
+
+    const partes = fechaStr.split("/");
+    if (partes.length !== 3) {
+        elemento.textContent = "Formato incorrecto";
+        return;
+    }
+
+    const dia = parseInt(partes[0], 10);
+    const mes = parseInt(partes[1], 10) - 1;
+    const anio = parseInt(partes[2], 10);
+
+    if (isNaN(dia) || isNaN(mes) || isNaN(anio)) {
+        elemento.textContent = "Fecha inválida";
+        return;
+    }
+
+    const nacimiento = new Date(anio, mes, dia);
+    const hoy = new Date();
+
+    let years = hoy.getFullYear() - nacimiento.getFullYear();
+    let months = hoy.getMonth() - nacimiento.getMonth();
+    let days = hoy.getDate() - nacimiento.getDate();
+
+    if (days < 0) {
+        months--;
+        const ultimoMes = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+        days += ultimoMes.getDate();
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    // Formato inteligente
+    let resultado = "";
+    if (years === 0 && months === 0) {
+        resultado = `${days} días`;
+    } else if (years === 0) {
+        resultado = `${months} meses`;
+    } else {
+        resultado = `${years} años, ${months} meses`;
+    }
+
+    elemento.textContent = resultado;
+});
+</script>
     <body>
         <!--=============== HEADER PROFILE ===============-->
         <header class="profile container">
@@ -32,8 +97,8 @@
                 </div>
                 <div class="profile__info grid">
                     <div class="profile__info-group">
-                        <h3 class="profile__info-number">21/09/2025</h3>
-                        <p class="profile__info-description">Nacimiento 📆</p>
+                        <h3 id="edadMascota" class="profile__info-number" data-nacimiento="21/09/2025">21/09/2025</h3>
+                        <p class="profile__info-description">Edad 🐾</p>
                     </div>
                     <div class="profile__info-group">
                         <h3 class="profile__info-number">0</h3>
