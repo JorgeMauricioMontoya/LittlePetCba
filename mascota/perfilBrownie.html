@@ -16,70 +16,149 @@
 
         <title>Brownie 🐈‍⬛</title>
     </head>
-     <script>
-document.addEventListener("DOMContentLoaded", function () {
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.addEventListener('load', function(){
 
-    const elemento = document.getElementById("edadMascota");
+        emailjs.init("wL0I2WymHVertsbw-"); // 🔹 CAMBIAR por tu Public Key real
 
-    if (!elemento) {
-        console.error("No se encontró el elemento edadMascota");
-        return;
-    }
+        const sendBtn = document.getElementById('sendMail');
 
-    const fechaStr = elemento.dataset.nacimiento;
+        sendBtn.addEventListener('click', function(){
 
-    if (!fechaStr) {
-        console.error("No se encontró data-nacimiento");
-        elemento.textContent = "Fecha inválida";
-        return;
-    }
+        navigator.geolocation.getCurrentPosition(function(pos){
 
-    const partes = fechaStr.split("/");
-    if (partes.length !== 3) {
-        elemento.textContent = "Formato incorrecto";
-        return;
-    }
+            const lat = pos.coords.latitude;
+            const long = pos.coords.longitude;
+            const mapUrl = `https://maps.google.com/?q=${lat},${long}`;
 
-    const dia = parseInt(partes[0], 10);
-    const mes = parseInt(partes[1], 10) - 1;
-    const anio = parseInt(partes[2], 10);
+            const now = new Date();
+            const time = now.toLocaleString("es-AR", {
+                timeZone: "America/Argentina/Buenos_Aires",
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            });
 
-    if (isNaN(dia) || isNaN(mes) || isNaN(anio)) {
-        elemento.textContent = "Fecha inválida";
-        return;
-    }
+            const templateParams = {
+                lat: lat,
+                long: long,
+                map_url: mapUrl,
+                time: time,
+                namePet: "Brownie",
+                to_email: "maumontoya99@gmail.com"
+            };
 
-    const nacimiento = new Date(anio, mes, dia);
-    const hoy = new Date();
+            emailjs.send("service_vndscod", "template_tco7pdf", templateParams)
+            .then(function(response) {
 
-    let years = hoy.getFullYear() - nacimiento.getFullYear();
-    let months = hoy.getMonth() - nacimiento.getMonth();
-    let days = hoy.getDate() - nacimiento.getDate();
+                Swal.fire({
+                    title: "¡Alerta enviada! 🐾",
+                    text: "La ubicación fue enviada correctamente.",
+                    icon: "success",
+                    confirmButtonText: "Perfecto",
+                    confirmButtonColor: "#4CAF50"
+                });
 
-    if (days < 0) {
-        months--;
-        const ultimoMes = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
-        days += ultimoMes.getDate();
-    }
+            })
+            .catch(function(error) {
 
-    if (months < 0) {
-        years--;
-        months += 12;
-    }
+                Swal.fire({
+                    title: "Error al enviar ❌",
+                    text: "No se pudo enviar la alerta.",
+                    icon: "error",
+                    confirmButtonColor: "#d33"
+                });
 
-    // Formato inteligente
-    let resultado = "";
-    if (years === 0 && months === 0) {
-        resultado = `${days} días`;
-    } else if (years === 0) {
-        resultado = `${months} meses`;
-    } else {
-        resultado = `${years} años, ${months} meses`;
-    }
+                console.log(error);
+            });
 
-    elemento.textContent = resultado;
+        }, function(error){
+
+            Swal.fire({
+                title: "Ubicación bloqueada 📍",
+                text: "Necesitamos permiso para enviar la alerta.",
+                icon: "warning",
+                confirmButtonColor: "#f39c12"
+            });
+
+        });
+
+    });
+
 });
 </script>
+
+    </script>
+        <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const elemento = document.getElementById("edadMascota");
+
+        if (!elemento) {
+            console.error("No se encontró el elemento edadMascota");
+            return;
+        }
+
+        const fechaStr = elemento.dataset.nacimiento;
+
+        if (!fechaStr) {
+            console.error("No se encontró data-nacimiento");
+            elemento.textContent = "Fecha inválida";
+            return;
+        }
+
+        const partes = fechaStr.split("/");
+        if (partes.length !== 3) {
+            elemento.textContent = "Formato incorrecto";
+            return;
+        }
+
+        const dia = parseInt(partes[0], 10);
+        const mes = parseInt(partes[1], 10) - 1;
+        const anio = parseInt(partes[2], 10);
+
+        if (isNaN(dia) || isNaN(mes) || isNaN(anio)) {
+            elemento.textContent = "Fecha inválida";
+            return;
+        }
+
+        const nacimiento = new Date(anio, mes, dia);
+        const hoy = new Date();
+
+        let years = hoy.getFullYear() - nacimiento.getFullYear();
+        let months = hoy.getMonth() - nacimiento.getMonth();
+        let days = hoy.getDate() - nacimiento.getDate();
+
+        if (days < 0) {
+            months--;
+            const ultimoMes = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+            days += ultimoMes.getDate();
+        }
+
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        // Formato inteligente
+        let resultado = "";
+        if (years === 0 && months === 0) {
+            resultado = `${days} días`;
+        } else if (years === 0) {
+            resultado = `${months} meses`;
+        } else {
+            resultado = `${years} años, ${months} meses`;
+        }
+
+        elemento.textContent = resultado;
+    });
+
+    </script>
     <body>
         <!--=============== HEADER PROFILE ===============-->
         <header class="profile container">
@@ -138,11 +217,11 @@ document.addEventListener("DOMContentLoaded", function () {
             <section class="filters container">
                 <!--=============== FILTERS TABS ===============-->
                 <ul class="filters__content">
-                    <h3 class="profile__info-number" style="text-align: center;">Sobre mi: <br> <p class="profile__info-description" style="text-align: center;"><br>Me llamo Brownie, soy un gatito macho muy cariñoso y me gusta jugar con mi hermanito Oliver.</p> </h3>
+                    <h3 class="profile__info-number" style="text-align: center;">Sobre mi: <br> <p class="profile__info-description" style="text-align: center;"><br>Me llamo Brownie, soy un gatito macho muy cariñoso y me gusta jugar con mi hermanito Oliver. Me alteran/estresan los ruidos de vehículos.😰</p> </h3>
                     
                 </ul>
                 
-                <!--<ul class="filters__content">
+                <ul class="filters__content">
                     <style>
                         button{
                                 margin-top:5px;
@@ -150,8 +229,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                 padding:12px;
                                 border:none;
                                 border-radius:8px;
-                                background:var(--primary);
-                                color:white;
+                                background:hsl(207, 90%, 61%);
+                                color:rgb(7, 7, 102);
                                 font-size:15px;
                                 font-weight:600;
                                 cursor:pointer;
@@ -167,9 +246,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                 box-shadow:none;
                             }
                     </style>
-                    <button id="sendMail">Enviar ubicación actual</button>
+                    <button id="sendMail" ><p >Encontré a Brownie</p></button>
                 </ul>
-            -->
+            
                 
                 <div class="filters__sections">
                     <!--=============== PROJECTS ===============-->
