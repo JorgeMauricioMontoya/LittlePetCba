@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 <style>
-/* RESET */
+/* ================= RESET ================= */
 *{
     margin:0;
     padding:0;
@@ -25,7 +25,7 @@ body{
     overflow-x:hidden;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 header{
     position:fixed;
     width:100%;
@@ -50,7 +50,6 @@ header{
 nav{
     display:flex;
 }
-
 nav a{
     margin-left:25px;
     text-decoration:none;
@@ -58,7 +57,6 @@ nav a{
     font-weight:500;
     transition:0.3s;
 }
-
 nav a:hover{
     color:#38bdf8;
 }
@@ -71,7 +69,28 @@ nav a:hover{
     cursor:pointer;
 }
 
-/* SECCIONES */
+/* CART ICON */
+.cart-btn{
+    background:transparent;
+    border:none;
+    color:white;
+    cursor:pointer;
+    position:relative;
+    font-size:18px;
+    margin-left:15px;
+}
+.cart-count{
+    position:absolute;
+    top:-6px;
+    right:-8px;
+    background:#ef4444;
+    color:white;
+    font-size:12px;
+    padding:2px 6px;
+    border-radius:999px;
+}
+
+/* ================= SECCIONES ================= */
 section{
     padding:80px 10%;
 }
@@ -89,17 +108,14 @@ section{
     font-size:48px;
     margin-bottom:20px;
 }
-
 .hero span{
     color:#38bdf8;
 }
-
 .hero p{
     max-width:600px;
     margin-bottom:30px;
     opacity:0.8;
 }
-
 .btn{
     padding:12px 30px;
     background:#38bdf8;
@@ -110,7 +126,6 @@ section{
     font-weight:600;
     transition:0.3s;
 }
-
 .btn:hover{
     background:#0ea5e9;
 }
@@ -121,7 +136,6 @@ section{
     grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:30px;
 }
-
 .card{
     background:#1e293b;
     padding:20px;
@@ -132,47 +146,88 @@ section{
     align-items:center;
     box-shadow:0 8px 20px rgba(0,0,0,0.4);
 }
-
 .card:hover{
     transform:translateY(-10px);
     background:#334155;
     box-shadow:0 12px 30px rgba(0,0,0,0.6);
 }
-
 .card img{
     width:100%;
     aspect-ratio: 4 / 3;
     object-fit:cover;
     border-radius:15px;
     margin-bottom:20px;
-    display:block;
 }
-
 .card h3{
     margin-bottom:15px;
     color:#38bdf8;
     text-align:center;
 }
-
 .card p{
     text-align:center;
     opacity:0.85;
 }
 
-/* FORMULARIO */
-.contact{
-    display:flex;
-    flex-direction:column;
-    max-width:500px;
-    margin:auto;
-}
-
-.contact input,
-.contact textarea{
-    margin-bottom:15px;
-    padding:12px;
+/* ADD TO CART BUTTON */
+.add-to-cart{
+    margin-top:12px;
+    padding:10px 18px;
+    border-radius:12px;
     border:none;
+    cursor:pointer;
+    font-weight:600;
+    background:#10b981;
+    color:#0f172a;
+}
+.add-to-cart:hover{ background:#059669; }
+
+/* CART SIDEBAR */
+.cart-sidebar{
+    position:fixed;
+    right:-420px;
+    top:0;
+    height:100vh;
+    width:420px;
+    background:#0b1220;
+    box-shadow:-10px 0 30px rgba(0,0,0,0.6);
+    padding:30px;
+    transition:right 0.35s ease;
+    z-index:1500;
+    overflow-y:auto;
+}
+.cart-sidebar.show{
+    right:0;
+}
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+.cart-items{ margin-bottom:20px; }
+.cart-item{
+    display:flex;
+    gap:12px;
+    margin-bottom:12px;
+    align-items:center;
     border-radius:10px;
+    padding:8px;
+    background:#111827;
+}
+.cart-item img{ width:64px; height:48px; object-fit:cover; border-radius:8px; }
+.qty-controls{ display:flex; gap:6px; align-items:center; }
+.qty-controls button{ padding:6px 10px; border-radius:8px; border:none; cursor:pointer; background:#374151; color:white; }
+
+/* CHECKOUT FORM */
+.checkout{
+    margin-top:10px;
+}
+.checkout input, .checkout textarea{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+    margin-bottom:8px;
     outline:none;
 }
 
@@ -190,28 +245,78 @@ footer{
     transform:translateY(20px);
     transition:all 1s ease;
 }
-
 .fade.show{
     opacity:1;
     transform:translateY(0);
 }
 
-/* RESPONSIVE */
-@media(max-width:768px){
-    .hero h1{
-        font-size:34px;
-    }
-    header{
-        padding:15px 5%;
-    }
-    section{
-        padding:60px 5%;
-    }
+/* ================= TITULOS ================= */
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+}
 
-    /* NAV MOVIL */
-    .menu-toggle{
-        display:block;
-    }
+/* ================= BENEFICIOS ================= */
+.beneficios-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+/* ================= CONTACTO ================= */
+.contacto-section{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:60px 20px;
+}
+.contact-form{
+    width:100%;
+    max-width:500px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+.contact-form input,
+.contact-form textarea{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+    background:#ffffff;
+    color:#0f172a;
+    font-size:14px;
+}
+.contact-form textarea{
+    resize:none;
+}
+.contact-form button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s ease;
+}
+.contact-form button:hover{
+    opacity:0.9;
+}
+.response-msg{
+    margin-top:15px;
+    font-weight:500;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+    .hero h1{ font-size:34px; }
+    header{ padding:15px 5%; }
+    section{ padding:60px 5%; }
+
+    .menu-toggle{ display:block; }
     nav{
         position:fixed;
         top:70px;
@@ -220,8 +325,8 @@ footer{
         height:100vh;
         background:#1e293b;
         flex-direction:column;
-        justify-content:center; /* centrado vertical */
-        align-items:center;     /* centrado horizontal */
+        justify-content:center;
+        align-items:center;
         transition:0.3s;
         z-index:999;
     }
@@ -229,81 +334,129 @@ footer{
         margin:20px 0;
         font-size:20px;
     }
-    nav.show{
-        right:0;
-    }
+    nav.show{ right:0; }
+
+    .cart-sidebar{ width:100%; right:-100%; }
+    .cart-sidebar.show{ right:0; }
 }
+.product-carousel-wrapper {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+}
+
+.product-carousel {
+    display: flex;
+    width: 300%; /* Ancho = 100% * cantidad de imágenes */
+    transition: transform 0.5s ease-in-out;
+}
+
+.product-carousel img {
+    width: 33.3333%; /* 100% dividido por cantidad de imágenes */
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+.carousel-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.carousel-controls button {
+    background: #38bdf8;
+    border: none;
+    border-radius: 50%;
+    color: #0f172a;
+    font-size: 18px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
 </style>
 </head>
-
 <body>
 
 <header>
     <div class="logo">LittlePetCba</div>
-    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    <div style="display:flex; align-items:center;">
+        <button class="cart-btn" id="open-cart" title="Ver carrito">🛒 <span class="cart-count" id="cart-count">0</span></button>
+        <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    </div>
     <nav id="nav-menu">
         <a href="#inicio">Inicio</a>
-        <a href="#proyecto">Proyecto</a>
+        <a href="#proyecto">Productos</a>
         <a href="#beneficios">Beneficios</a>
         <a href="#contacto">Contacto</a>
     </nav>
 </header>
 
+<!-- ================= INICIO ================= -->
 <section id="inicio" class="hero fade">
     <h1>Tecnología con propósito <br><span>para proteger a nuestras mascotas</span></h1>
     <p>Desarrollamos soluciones accesibles e innovadoras para garantizar la seguridad de las mascotas y brindar tranquilidad a quienes las aman.</p>
     <button class="btn" onclick="scrollToSection('contacto')">Quiero saber más</button>
 </section>
 
+<!-- ================= PROYECTO ================= -->
 <section id="proyecto" class="fade">
-    <h2 style="margin-bottom:40px;">Proyecto</h2>
-    <div class="cards">
+    <h2 class="section-title">Productos</h2>
+    <div class="cards" id="products-container">
 
-        <!-- VERSION 1 -->
-        <div class="card">
-            <img src="assets/img/Brownie.jpg" alt="Collar QR">
-            <h3>Versión 1 – Collar QR Inteligente</h3>
-            <p>
-                Escaneo con autorización del usuario, envío automático de ubicación en tiempo real 
-                y redirección a la ficha digital de la mascota con toda su información.
-            </p>
+        <!-- PRODUCT 1 -->
+        <div class="card" data-id="collar-v1" data-name="Chapita QR Acero" data-price="15000" data-img="assets/img/Chapita-AceroInox.png">
+        <div class="product-carousel-wrapper">
+            <div class="product-carousel">
+            <img src="assets/img/Chapita-AceroInox.png" alt="Collar QR">
+            <img src="assets/img/PerfilBrownie.png" alt="Collar QR">
+            <img src="assets/img/LocationRecibida.png" alt="Collar QR">
+            </div>
+        </div>
+        <div class="carousel-controls">
+            <button class="prev">&#10094;</button>
+            <button class="next">&#10095;</button>
+        </div>
+        <h3>Chapita QR Acero</h3>
+        <p>Collar de acero inoxidable con QR resistente al agua. Perfil digital y ubicación compartida.</p>
+        <div><strong>$15000</strong></div>
+        <button class="add-to-cart">Agregar al carrito</button>
         </div>
 
-        <!-- VERSION 2 -->
-        <div class="card">
-            <img src="assets/img/Version2.jpg" alt="Chip GPS Mascota">
-            <h3>Versión 2 – Chip con Geolocalización</h3>
-            <p>
-                Desarrollo de chip integrado con monitoreo en tiempo real desde una app móvil propia, 
-                brindando control total y tranquilidad permanente.
-            </p>
+        <!-- PRODUCT 2 -->
+        <div class="card" data-id="collar-v2" data-name="Chapita QR Acero - Personalizada" data-price="17000" data-img="assets/img/Chapita-AceroInox.png">
+        <div class="product-carousel-wrapper">
+            <div class="product-carousel">
+            <img src="assets/img/Chapita-AceroInox.png" alt="Collar QR">
+            </div>
         </div>
+        <div class="carousel-controls">
+            <button class="prev">&#10094;</button>
+            <button class="next">&#10095;</button>
+        </div>
+        <h3>Chapita QR Acero - Personalizada</h3>
+        <p>Collar de acero inoxidable personalizado con QR resistente al agua. Perfil digital y ubicación compartida.</p>
+        <div><strong>$17000</strong></div>
+        <button class="add-to-cart">Agregar al carrito</button>
+        </div>
+
+        <!-- PRODUCT 3 
+        <div class="card" data-id="collar-gato" data-name="Colgante QR Gato" data-price="999" data-img="assets/img/PerfilMascota.png">
+            <img src="assets/img/PerfilMascota.png" alt="Colgante QR Gato">
+            <h3>Colgante QR Gato</h3>
+            <p>Pequeño, liviano y de acero inoxidable. Perfecto para colgar en collares de gatos.</p>
+            <div><strong>$999</strong></div>
+            <button class="add-to-cart">Agregar al carrito</button>
+        </div>-->
 
     </div>
 </section>
 
-<section id="proyecto" class="fade">
-    <div class="cards">
-
-        <!-- VERSION 1 -->
-        <div class="card">
-            <img src="assets/img/PerfilMascota.png" alt="Collar QR">
-            <h3>Versión 1 – Perfil digital mascota</h3>
-        </div>
-
-        <!-- VERSION 2 -->
-        <div class="card">
-            <img src="assets/img/LocationRecibida.png" alt="Chip GPS Mascota">
-            <h3>Versión 1 – Localización recibida</h3>
-
-        </div>
-
-    </div>
-</section>
-
+<!-- ================= BENEFICIOS ================= -->
 <section id="beneficios" class="fade">
-    <h2 style="margin-bottom:40px;">Beneficios</h2>
-    <div class="cards">
+    <h2 class="section-title">Beneficios</h2>
+    <div class="cards beneficios-cards">
         <div class="card">
             <h3>Ubicación inmediata</h3>
             <p>Reduce el tiempo de respuesta ante una pérdida.</p>
@@ -319,75 +472,228 @@ footer{
     </div>
 </section>
 
-<section id="contacto" class="fade">
-    <h2 style="margin-bottom:30px;">Contacto</h2>
-    <form id="contact-form" class="contact">
+<!-- ================= CONTACTO ================= -->
+<section id="contacto" class="fade contacto-section">
+    <h2 class="section-title">Contacto</h2>
+
+    <form id="contact-form" class="contact-form">
         <input type="text" name="user_name" placeholder="Nombre" required>
         <input type="email" name="user_email" placeholder="Correo electrónico" required>
         <input type="tel" name="user_phone" placeholder="Número de teléfono" required>
         <textarea name="message" rows="4" placeholder="Mensaje" required></textarea>
-        <button class="btn">Enviar mensaje</button>
+        <button type="submit" class="btn">Enviar mensaje</button>
     </form>
 
-    <p id="response-msg" style="margin-top:15px;"></p>
+    <p id="response-msg" class="response-msg"></p>
 </section>
 
 <footer>
     © 2026 LittlePetCba | Tecnología accesible para proteger a quienes más queremos
 </footer>
 
+<!-- ================= CART SIDEBAR ================= -->
+<div class="cart-sidebar" id="cart-sidebar" aria-hidden="true">
+    <div class="cart-header">
+        <h3>Tu carrito</h3>
+        <div>
+            <button class="btn" id="close-cart">Cerrar</button>
+        </div>
+    </div>
+
+    <div class="cart-items" id="cart-items"></div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+        <strong>Total:</strong>
+        <strong id="cart-total">$0</strong>
+    </div>
+
+    <div class="checkout">
+        <h4 style="margin-top:12px;">Datos para el pedido:</h4>
+        <input type="text" id="checkout-name" placeholder="Tu nombre" required>
+        <input type="tel" id="checkout-phone" placeholder="Tu teléfono (ej. +549351...)" required>
+        <textarea id="checkout-note" placeholder="Instrucciones / dirección (opcional)" rows="3"></textarea>
+        <button id="send-whatsapp" class="btn" style="width:100%; margin-top:8px;">Enviar pedido por WhatsApp</button>
+    </div>
+</div>
+
 <script>
-function scrollToSection(id){
-    document.getElementById(id).scrollIntoView({behavior:"smooth"});
-}
+// ================= JS ANIMACIONES, FORM, CARRO =================
 
-/* EMAILJS CONFIG */
-(function(){
-    emailjs.init("wL0I2WymHVertsbw-"); // <-- REEMPLAZAR
-})();
+function scrollToSection(id){ document.getElementById(id).scrollIntoView({behavior:"smooth"}); }
 
+/* EMAILJS */
+(function(){ emailjs.init("test"); })();
 document.getElementById("contact-form").addEventListener("submit", function(e){
     e.preventDefault();
-
-    emailjs.sendForm("service_83k3pri", "template_dwcja6p", this)
+    emailjs.sendForm("test","test",this)
     .then(function(){
-        document.getElementById("response-msg").innerHTML = "Mensaje enviado correctamente ✔";
+        document.getElementById("response-msg").innerHTML="Mensaje enviado correctamente ✔";
         document.getElementById("contact-form").reset();
-    }, function(error){
-        document.getElementById("response-msg").innerHTML = "Error al enviar el mensaje.";
-        console.log(error);
+    }, function(err){
+        document.getElementById("response-msg").innerHTML="Error al enviar el mensaje.";
+        console.log(err);
     });
 });
 
-/* ANIMACIONES */
-const faders = document.querySelectorAll(".fade");
-
-const appearOptions = { threshold: 0.2 };
-
-const appearOnScroll = new IntersectionObserver(function(entries, observer){
-    entries.forEach(entry => {
-        if(!entry.isIntersecting){ return; }
+/* INTERSECTION OBSERVER */
+const faders=document.querySelectorAll(".fade");
+const appearOptions={threshold:0.2};
+const appearOnScroll=new IntersectionObserver(function(entries){
+    entries.forEach(entry=>{
+        if(!entry.isIntersecting) return;
         entry.target.classList.add("show");
         observer.unobserve(entry.target);
     });
-}, appearOptions);
+},appearOptions);
+faders.forEach(f=>appearOnScroll.observe(f));
 
-faders.forEach(fader => appearOnScroll.observe(fader));
-
-/* MENU RESPONSIVE */
-const menuToggle = document.getElementById('menu-toggle');
-const navMenu = document.getElementById('nav-menu');
-
-menuToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('show');
+/* MENU */
+const menuToggle=document.getElementById('menu-toggle');
+const navMenu=document.getElementById('nav-menu');
+menuToggle.addEventListener('click',()=>{ navMenu.classList.toggle('show'); });
+document.querySelectorAll('#nav-menu a').forEach(link=>{
+    link.addEventListener('click',()=>{ navMenu.classList.remove('show'); });
 });
 
-document.querySelectorAll('#nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('show');
+/* CARRITO */
+const WHATSAPP_NUMBER='5493471589458';
+const productsContainer=document.getElementById('products-container');
+const cartBtn=document.getElementById('open-cart');
+const cartSidebar=document.getElementById('cart-sidebar');
+const closeCartBtn=document.getElementById('close-cart');
+const cartItemsEl=document.getElementById('cart-items');
+const cartCountEl=document.getElementById('cart-count');
+const cartTotalEl=document.getElementById('cart-total');
+const sendWhatsBtn=document.getElementById('send-whatsapp');
+let cart={};
+
+document.querySelectorAll('.card .add-to-cart').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+        const card=e.target.closest('.card');
+        const id=card.dataset.id;
+        const name=card.dataset.name;
+        const price=Number(card.dataset.price);
+        const img=card.dataset.img;
+        if(cart[id]){ cart[id].qty+=1; }else{ cart[id]={id,name,price,qty:1,img}; }
+        updateCartUI(); openCart();
     });
 });
-</script>
 
+function updateCartUI(){
+    cartItemsEl.innerHTML='';
+    let total=0, count=0;
+    Object.values(cart).forEach(item=>{
+        total+=item.price*item.qty; count+=item.qty;
+        const itemEl=document.createElement('div'); itemEl.className='cart-item';
+        itemEl.innerHTML=`
+            <img src="${item.img}" alt="${item.name}">
+            <div style="flex:1;">
+                <strong style="display:block">${item.name}</strong>
+                <div style="opacity:0.85;">$ ${item.price} x ${item.qty} = $ ${item.price*item.qty}</div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
+                <div class="qty-controls">
+                    <button class="qty-decrease" data-id="${item.id}">-</button>
+                    <div style="padding:6px 8px; background:#0b1220; border-radius:6px;">${item.qty}</div>
+                    <button class="qty-increase" data-id="${item.id}">+</button>
+                </div>
+                <button class="btn style="padding:6px 8px; margin-top:6px;" data-id="${item.id}" data-action="remove">Eliminar</button>
+            </div>
+        `;
+        cartItemsEl.appendChild(itemEl);
+    });
+
+    cartTotalEl.textContent = `$ ${total}`;
+    cartCountEl.textContent = count;
+    // attach qty event listeners
+    cartItemsEl.querySelectorAll('.qty-increase').forEach(b=>{
+        b.addEventListener('click', ()=> { changeQty(b.dataset.id, 1); });
+    });
+    cartItemsEl.querySelectorAll('.qty-decrease').forEach(b=>{
+        b.addEventListener('click', ()=> { changeQty(b.dataset.id, -1); });
+    });
+    cartItemsEl.querySelectorAll('button[data-action="remove"]').forEach(b=>{
+        b.addEventListener('click', ()=> { removeItem(b.dataset.id); });
+    });
+}
+
+function changeQty(id, delta){
+    if(!cart[id]) return;
+    cart[id].qty += delta;
+    if(cart[id].qty <= 0) delete cart[id];
+    updateCartUI();
+}
+
+function removeItem(id){
+    delete cart[id];
+    updateCartUI();
+}
+
+function openCart(){
+    cartSidebar.classList.add('show');
+    cartSidebar.setAttribute('aria-hidden','false');
+}
+function closeCart(){
+    cartSidebar.classList.remove('show');
+    cartSidebar.setAttribute('aria-hidden','true');
+}
+
+cartBtn.addEventListener('click', ()=> {
+    openCart();
+});
+closeCartBtn.addEventListener('click', ()=> {
+    closeCart();
+});
+
+// Enviar pedido por WhatsApp
+sendWhatsBtn.addEventListener('click', () => {
+    if(Object.keys(cart).length === 0){
+        alert('Tu carrito está vacío.');
+        return;
+    }
+
+    const name = document.getElementById('checkout-name').value.trim();
+    const phone = document.getElementById('checkout-phone').value.trim();
+    const note = document.getElementById('checkout-note').value.trim();
+
+    if(!name || !phone){
+        alert('Por favor completa tu nombre y teléfono para enviar el pedido.');
+        return;
+    }
+
+    // Construir mensaje bonito desde el lado del usuario
+    let message = `🐾 *¡Hola LittlePetCba!* 🐾%0A`;
+    message += `%0AMe gustaría realizar un pedido desde su web.%0A`;
+    message += `%0A*🧑 Nombre:* ${encodeURIComponent(name)}%0A`;
+    message += `*📞 Teléfono:* ${encodeURIComponent(phone)}%0A`;
+    if(note) message += `*📝 Nota / Dirección:* ${encodeURIComponent(note)}%0A`;
+
+    message += `%0A*🛒 Productos solicitados:*%0A`;
+    let total = 0;
+    Object.values(cart).forEach(item => {
+        message += `- ${encodeURIComponent(item.name)} x${item.qty} ($${item.price * item.qty})%0A`;
+        total += item.price * item.qty;
+    });
+
+    message += `%0A*💰 Total:* $${total}%0A`;
+    message += `%0A✨ ¡Gracias! Espero su confirmación de pedido. ✨%0A`;
+
+    // WhatsApp de tu negocio
+    const waNumberClean = WHATSAPP_NUMBER.replace(/\D/g,''); 
+    const waUrl = `https://api.whatsapp.com/send?phone=${waNumberClean}&text=${message}`;
+
+    // Abrir WhatsApp desde el usuario
+    window.open(waUrl, '_blank');
+});
+
+// simple utility
+function escapeHtml(str){
+    return str.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+}
+
+/* Inicialización */
+updateCartUI();
+</script>
+<script script src="assets/js/carrousel.js"></script></script>
 </body>
 </html>
