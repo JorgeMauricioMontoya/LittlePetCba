@@ -522,10 +522,10 @@ footer{
 function scrollToSection(id){ document.getElementById(id).scrollIntoView({behavior:"smooth"}); }
 
 /* EMAILJS */
-(function(){ emailjs.init("test"); })();
+(function(){ emailjs.init("wL0I2WymHVertsbw-"); })();
 document.getElementById("contact-form").addEventListener("submit", function(e){
     e.preventDefault();
-    emailjs.sendForm("test","test",this)
+    emailjs.sendForm("service_83k3pri","template_dwcja6p",this)
     .then(function(){
         document.getElementById("response-msg").innerHTML="Mensaje enviado correctamente ✔";
         document.getElementById("contact-form").reset();
