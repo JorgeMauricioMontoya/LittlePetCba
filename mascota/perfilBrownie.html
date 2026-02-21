@@ -92,73 +92,130 @@
 
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-    </script>
-        <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    const elemento = document.getElementById("edadMascota");
+    if (!elemento) return;
 
-        const elemento = document.getElementById("edadMascota");
+    const fechaStr = elemento.dataset.nacimiento;
+    if (!fechaStr) return;
 
-        if (!elemento) {
-            console.error("No se encontró el elemento edadMascota");
-            return;
-        }
+    const partes = fechaStr.split("/");
+    if (partes.length !== 3) return;
 
-        const fechaStr = elemento.dataset.nacimiento;
+    const diaNacimiento = parseInt(partes[0], 10); // día de nacimiento
+    const mesNacimiento = parseInt(partes[1], 10); // lo dejamos para edad
+    const anioNacimiento = parseInt(partes[2], 10);
 
-        if (!fechaStr) {
-            console.error("No se encontró data-nacimiento");
-            elemento.textContent = "Fecha inválida";
-            return;
-        }
+    if (isNaN(diaNacimiento) || isNaN(mesNacimiento) || isNaN(anioNacimiento)) return;
 
-        const partes = fechaStr.split("/");
-        if (partes.length !== 3) {
-            elemento.textContent = "Formato incorrecto";
-            return;
-        }
+    const hoy = new Date();
 
-        const dia = parseInt(partes[0], 10);
-        const mes = parseInt(partes[1], 10) - 1;
-        const anio = parseInt(partes[2], 10);
+    // ===== CÁLCULO DE EDAD (sin modificar) =====
+    const nacimiento = new Date(anioNacimiento, mesNacimiento - 1, diaNacimiento);
 
-        if (isNaN(dia) || isNaN(mes) || isNaN(anio)) {
-            elemento.textContent = "Fecha inválida";
-            return;
-        }
+    let years = hoy.getFullYear() - nacimiento.getFullYear();
+    let months = hoy.getMonth() - nacimiento.getMonth();
+    let days = hoy.getDate() - nacimiento.getDate();
 
-        const nacimiento = new Date(anio, mes, dia);
-        const hoy = new Date();
+    if (days < 0) {
+        months--;
+        const ultimoMes = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+        days += ultimoMes.getDate();
+    }
 
-        let years = hoy.getFullYear() - nacimiento.getFullYear();
-        let months = hoy.getMonth() - nacimiento.getMonth();
-        let days = hoy.getDate() - nacimiento.getDate();
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
 
-        if (days < 0) {
-            months--;
-            const ultimoMes = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
-            days += ultimoMes.getDate();
-        }
+    let resultado = "";
+    if (years === 0 && months === 0) {
+        resultado = `${days} días`;
+    } else if (years === 0) {
+        resultado = `${months} meses`;
+    } else {
+        resultado = `${years} años, ${months} meses`;
+    }
 
-        if (months < 0) {
-            years--;
-            months += 12;
-        }
+    elemento.textContent = resultado;
 
-        // Formato inteligente
-        let resultado = "";
-        if (years === 0 && months === 0) {
-            resultado = `${days} días`;
-        } else if (years === 0) {
-            resultado = `${months} meses`;
-        } else {
-            resultado = `${years} años, ${months} meses`;
-        }
+    // ===== POPUP CADA DÍA 21 =====
+    const hoyDia = hoy.getDate(); // día de hoy
+    if (hoyDia === diaNacimiento) {
+        mostrarPopupCumple();
+    }
 
-        elemento.textContent = resultado;
-    });
+    // ===== FUNCIÓN POPUP =====
+    function mostrarPopupCumple() {
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.background = "rgba(0,0,0,0.6)";
+        overlay.style.display = "flex";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
+        overlay.style.zIndex = "9999";
 
-    </script>
+        const caja = document.createElement("div");
+        caja.style.background = "#fff";
+        caja.style.padding = "30px";
+        caja.style.borderRadius = "15px";
+        caja.style.textAlign = "center";
+        caja.style.boxShadow = "0 10px 25px rgba(0,0,0,0.3)";
+        caja.style.fontFamily = "sans-serif";
+
+        caja.innerHTML = `
+            <h2 style="color:#ff6b6b;">🎉 ¡Feliz Cumpleaños Brownie! 🐾</h2>
+            <p>Hoy es un día muy especial 🐈‍⬛</p>
+            <button id="cerrarCumple" style="margin-top:15px;padding:10px 20px;border:none;background:#ff6b6b;color:white;border-radius:8px;cursor:pointer;">
+                Cerrar
+            </button>
+        `;
+
+        overlay.appendChild(caja);
+        document.body.appendChild(overlay);
+
+        document.getElementById("cerrarCumple").addEventListener("click", function () {
+            overlay.remove();
+        });
+    }
+
+});
+</script>
+
+<!--<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const popup = document.createElement("div");
+    popup.style.position = "fixed";
+    popup.style.top = "0";
+    popup.style.left = "0";
+    popup.style.width = "100%";
+    popup.style.height = "100%";
+    popup.style.background = "rgba(0,0,0,0.6)";
+    popup.style.display = "flex";
+    popup.style.justifyContent = "center";
+    popup.style.alignItems = "center";
+    popup.style.zIndex = "9999";
+
+    popup.innerHTML = `
+        <div style="background:white;padding:30px;border-radius:10px;text-align:center;">
+            <h2>🎉 Popup de prueba</h2>
+            <button onclick="this.parentElement.parentElement.remove()">
+                Cerrar
+            </button>
+        </div>
+    `;
+
+    document.body.appendChild(popup);
+
+});
+</script> -->
     <body>
         <!--=============== HEADER PROFILE ===============-->
         <header class="profile container">
